@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ant-form-item-explain-error {
+  margin: 0.5rem 0px;
+}
+
+.container-main {
+  min-height: 100%;
+}
+.container-main h5 {
+  padding-top: 16px;
+  margin-top: 0px;
+}
+.custome-toolbar {
+  --background: white;
+  --border-width: 0px !important;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+}
+.content-wrapper ion-router-outlet {
+  contain: none;
+}
+ion-footer {
+  box-shadow: 0 2px 4px 3px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+    0 1px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}

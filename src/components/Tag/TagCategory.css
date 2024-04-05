@@ -1,0 +1,21 @@
+.category__tag {
+    display: flex;
+    align-items: center;
+    background: #eff0f4;
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px 15px;
+    border-radius: 10px;
+    width: fit-content;
+    color: #000 !important;
+    border: 1px solid #0000004d;
+}
+.category__tag img {
+    max-width: 25px;
+    height: 25px;
+    margin-right: 5px;
+}
+.category__list .ant-tag-checkable-checked {
+    background: #1677ff;
+    color: white !important;
+}

@@ -1,0 +1,7 @@
+{
+  "name": "smartHouse",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

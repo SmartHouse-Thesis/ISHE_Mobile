@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+.layout-auth {
+  height: 100vh;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.header {
+  margin-top: 30px;
+}
+.image-auth {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.image-auth img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+}
+.login-with {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.login-with-icon {
+  display: flex;
+  gap: 15px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid #999;
+  text-align: center;
+  gap: 5px;
+  flex: 0 0 50px;
+}
+
+@media (max-height: 750px) {
+  .header {
+    margin-top: 0px;
+  }
+  .image-auth img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+}
