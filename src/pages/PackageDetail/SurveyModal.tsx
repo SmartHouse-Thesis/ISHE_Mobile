@@ -5,9 +5,13 @@ import SurveyRequestAPI from "../../api/Survey";
 import { onHandleErrorAPIResponse } from "../../utils/helper";
 import dayjs from "dayjs";
 import { DateTimeFormat } from "../../enums";
-import { CUSTOMER_ID } from "../../utils/constant";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const SurveyModal = ({}, ref: any) => {
+  const userProfileState = useSelector(
+    (selector: RootState) => selector.userProfile.profile
+  );
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [form] = Form.useForm();
   const { isPending: isLoadingCreateNewSurvey, mutate: createNewSurvey } =
@@ -34,7 +38,7 @@ const SurveyModal = ({}, ref: any) => {
 
   const onSubmit = (value: { description: string; surveyDate: string }) => {
     createNewSurvey({
-      customerId: CUSTOMER_ID,
+      customerId: userProfileState.id,
       description: value.description,
       surveyDate: dayjs(value.surveyDate).format(DateTimeFormat.DATE_FORMAT),
     });

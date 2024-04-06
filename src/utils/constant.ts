@@ -10,6 +10,8 @@ export const END_POINTS = {
     CONTRACT: "/customer-role/contracts",
     SURVEY: "/customer-role/survey",
   },
+
+  USER_PROFILE: "/user-profile",
 };
 
 export const END_POINTS_API = {
@@ -32,6 +34,7 @@ export const ROUTES_NON_FOOTER_HEADER = [
   END_POINTS.CUSTOMER_ROLE.PACKAGE,
   END_POINTS.CUSTOMER_ROLE.CONTRACT,
   END_POINTS.CUSTOMER_ROLE.SURVEY,
+  END_POINTS.USER_PROFILE,
 ];
 
 export const CUSTOMER_ID = "ba192f6f-e0fb-46f4-b427-4cb324f6538c";

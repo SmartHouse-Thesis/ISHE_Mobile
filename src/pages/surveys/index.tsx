@@ -9,9 +9,14 @@ import {
 import { SurveyItemTypes } from "../../types/Survey";
 import dayjs from "dayjs";
 import { DateTimeFormat } from "../../enums";
-import { CUSTOMER_ID } from "../../utils/constant";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const Surveys = () => {
+  const userProfileState = useSelector(
+    (selector: RootState) => selector.userProfile.profile
+  );
+
   const {
     isPending: isPendingSurveyList,
     mutate: getSurveyList,
@@ -28,7 +33,7 @@ const Surveys = () => {
 
   useEffect(() => {
     getSurveyList({
-      customerId: CUSTOMER_ID,
+      customerId: userProfileState.id,
     });
   }, []);
 

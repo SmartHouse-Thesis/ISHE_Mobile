@@ -5,18 +5,20 @@ import { UserProfileTypes } from "../types";
 export const userProfileSlice = createSlice({
   name: "userProfile",
   initialState: {
-    id: "",
-    phoneNumber: "",
-    fullName: "",
-    email: "",
-    avatar: null,
-    roleName: "",
-    status: "",
-    createAt: "",
+    profile: {
+      id: "",
+      phoneNumber: "",
+      fullName: "",
+      email: "",
+      avatar: null,
+      roleName: "",
+      status: "",
+      createAt: "",
+    },
   },
   reducers: {
     updateUserProfile: (state, action: PayloadAction<UserProfileTypes>) => {
-      state = action.payload;
+      state.profile = action.payload;
     },
   },
 });

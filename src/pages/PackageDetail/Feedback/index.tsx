@@ -19,8 +19,9 @@ import { FrownOutlined, MehOutlined, SmileOutlined } from "@ant-design/icons";
 import { useMutation } from "@tanstack/react-query";
 import FeedbackAPI from "../../../api/Feedback";
 import { FeedbackItemTypes } from "../../../api/DevicePackage/type";
-import { CUSTOMER_ID } from "../../../utils/constant";
 import { onHandleErrorAPIResponse } from "../../../utils/helper";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const customIcons: Record<number, React.ReactNode> = {
   1: <FrownOutlined />,
@@ -40,6 +41,9 @@ const FeedbackModal = (
   { PackageId, FeedbackUpdateProp, HandleAfterCloseModal }: FeedbackModalTypes,
   ref: any
 ) => {
+  const userProfileState = useSelector(
+    (selector: RootState) => selector.userProfile.profile
+  );
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [form] = Form.useForm();
   const { isPending: isLoadingCreateFeedback, mutate: createFeedback } =
@@ -99,7 +103,7 @@ const FeedbackModal = (
     } else {
       createFeedback({
         ...values,
-        customerId: CUSTOMER_ID,
+        customerId: userProfileState.id,
         devicePackageId: PackageId,
       });
     }

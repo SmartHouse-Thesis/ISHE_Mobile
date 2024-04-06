@@ -9,3 +9,10 @@ export enum SurveyStatusEnum {
   COMPLETED = "Completed",
   REJECTED = "Rejected",
 }
+
+export enum NavigateMenuEnum {
+  HOME = "Home",
+  CONTRACT = "Contract",
+  SURVEY = "Survey",
+  PROFILE = "Profile",
+}

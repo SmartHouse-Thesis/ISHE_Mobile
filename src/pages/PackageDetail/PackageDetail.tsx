@@ -12,8 +12,9 @@ import {
 } from "../../api/DevicePackage/type";
 import SurveyModal from "./SurveyModal";
 import FeedbackModal from "./Feedback";
-import { CUSTOMER_ID } from "../../utils/constant";
 import { EditOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const PackageDetail: React.FC = () => {
   const { id }: any = useParams();
@@ -21,6 +22,9 @@ const PackageDetail: React.FC = () => {
   const surveyModalRef = useRef<any>();
   const createFeedbackModalRef = useRef<any>();
   const [feedbackUpdate, setFeedbackUpdate] = useState<FeedbackItemTypes>();
+  const userProfileState = useSelector(
+    (selector: RootState) => selector.userProfile.profile
+  );
 
   const {
     isPending: isDeviceByPackageIdLoading,
@@ -48,7 +52,7 @@ const PackageDetail: React.FC = () => {
   const onCheckCustomerFeedback = () => {
     if (packageData) {
       const isExistCustomer = packageData.feedbackDevicePackages.some(
-        (item) => item.customer.accountId === CUSTOMER_ID
+        (item) => item.customer.accountId === userProfileState.id
       );
       return isExistCustomer;
     }
@@ -108,7 +112,7 @@ const PackageDetail: React.FC = () => {
                   description={feedback.content}
                 />
 
-                {feedback.customer.accountId === CUSTOMER_ID && (
+                {feedback.customer.accountId === userProfileState.id && (
                   <Button
                     icon={<EditOutlined />}
                     type="primary"
