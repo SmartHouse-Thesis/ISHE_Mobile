@@ -1,0 +1,14 @@
+.chat-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.chat-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.latest-chat {
+  font-size: 0.75rem;
+  color: gray;
+}

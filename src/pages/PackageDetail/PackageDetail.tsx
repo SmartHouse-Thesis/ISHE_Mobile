@@ -15,19 +15,22 @@ import FeedbackModal from "./Feedback";
 import { EditOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import StaffList from "./StaffList";
 
 const PackageDetail: React.FC = () => {
   const { id }: any = useParams();
   const [packageData, setPackage] = useState<DevicePackageDetailTypes>();
   const surveyModalRef = useRef<any>();
   const createFeedbackModalRef = useRef<any>();
+  const staffListRef = useRef<any>();
+
   const [feedbackUpdate, setFeedbackUpdate] = useState<FeedbackItemTypes>();
   const userProfileState = useSelector(
     (selector: RootState) => selector.userProfile.profile
   );
 
   const {
-    isPending: isDeviceByPackageIdLoading,
+    isLoading: isDeviceByPackageIdLoading,
     mutate: getDevicesByPackageId,
   } = useMutation({
     mutationFn: DevicePackagesAPI.getDeviceByPackageId,
@@ -65,9 +68,15 @@ const PackageDetail: React.FC = () => {
     createFeedbackModalRef.current.openModal();
   };
 
+  const onOpenStaffList = () => {
+    staffListRef.current.openModal();
+  };
+
   return (
     <div className="container-main content-wrapper detail-package-wrapper">
       <SurveyModal ref={surveyModalRef} />
+      <StaffList ref={staffListRef} />
+
       <FeedbackModal
         ref={createFeedbackModalRef}
         PackageId={packageData?.id as string}
@@ -134,7 +143,9 @@ const PackageDetail: React.FC = () => {
       )}
 
       <Flex gap="middle">
-        <Button block>Trò chuyện</Button>
+        <Button block onClick={onOpenStaffList}>
+          Trò chuyện
+        </Button>
         <Button
           type="primary"
           block

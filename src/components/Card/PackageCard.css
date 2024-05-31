@@ -44,3 +44,9 @@ ion-card-subtitle {
   border-radius: 8px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+
+.card-img {
+  height: 10px;
+  width: 100%;
+  object-fit: cover;
+}

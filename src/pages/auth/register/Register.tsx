@@ -11,7 +11,7 @@ import { SignUpCustomerAccountTypes } from "../../../api/Customer/type";
 
 const Register: React.FC = () => {
   const history = useHistory();
-  const { mutate, isPending: isLoadingSignUp } = useMutation({
+  const { mutate, isLoading: isLoadingSignUp } = useMutation({
     mutationFn: CustomerAPI.SignUpAccount,
     onSuccess: () => {
       message.success("Create a new account is successfully"),

@@ -3,7 +3,7 @@ import queryString from "query-string";
 
 const axiosClient = axios.create({
   baseURL: "https://phat-dat-store.azurewebsites.net",
-  timeout: 3000,
+  timeout: 10000,
   headers: {
     "content-type": "application/json",
   },

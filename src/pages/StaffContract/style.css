@@ -1,0 +1,31 @@
+.contract-tag {
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: #b5c0d0;
+}
+
+.contract-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #414141;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.staff-name {
+  font-size: 0.5rem;
+  color: #414141;
+  font-weight: 500;
+}
+
+.upload-btn {
+  border: 1px solid gray;
+  border-radius: 0.25rem;
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}

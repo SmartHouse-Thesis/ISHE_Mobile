@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   const [packages, setPackages] = useState<DevicePackageTypes[]>([]);
 
   const {
-    isPending: isDevicePackagesLoading,
+    isLoading: isDevicePackagesLoading,
     mutate: mutateAllDevicePackages,
     data: devicePackages,
   } = useMutation({
@@ -45,10 +45,10 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-wrapper">
-      <h5>Welcome back !</h5>
+      <h5>Chào mừng bạn đã trở lại !</h5>
       <Input.Search
         style={{ marginBottom: "1rem" }}
-        placeholder="Search..."
+        placeholder="Tìm kiếm..."
         onChange={debounce(onSearchPackageName, 500)}
       />
 

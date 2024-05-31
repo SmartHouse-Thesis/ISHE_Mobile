@@ -46,7 +46,7 @@ const FeedbackModal = (
   );
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [form] = Form.useForm();
-  const { isPending: isLoadingCreateFeedback, mutate: createFeedback } =
+  const { isLoading: isLoadingCreateFeedback, mutate: createFeedback } =
     useMutation({
       mutationFn: FeedbackAPI.CreateFeedback,
       mutationKey: ["feedback-api"],
@@ -60,7 +60,7 @@ const FeedbackModal = (
       },
     });
 
-  const { isPending: isLoadingUpdateFeedback, mutate: updateFeedBack } =
+  const { isLoading: isLoadingUpdateFeedback, mutate: updateFeedBack } =
     useMutation({
       mutationFn: FeedbackAPI.UpdateFeedback,
       mutationKey: ["feedback-api"],

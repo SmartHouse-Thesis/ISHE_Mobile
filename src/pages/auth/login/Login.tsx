@@ -11,6 +11,7 @@ import { END_POINTS } from "../../../utils/constant";
 import { useDispatch } from "react-redux";
 import { updateUserProfile } from "../../../redux/userProfileSlice";
 import { UserProfileTypes } from "../../../types";
+import { useEffect } from "react";
 
 const Login: React.FC = () => {
   const history = useHistory();
@@ -25,9 +26,17 @@ const Login: React.FC = () => {
     queryKey: ["user-profile"],
     queryFn: AuthenticationAPI.GetAccountLogin,
     enabled: false,
+    onSuccess: (data) => {
+      dispatch(updateUserProfile(data as any));
+      if (newUser.status.toLowerCase() === "staff") {
+        history.replace(END_POINTS.STAFF_ROLE.SURVEY_REPORT);
+      } else {
+        history.replace(END_POINTS.CUSTOMER_ROLE.HOME);
+      }
+    },
   });
 
-  const { mutate: mutateLoginAccount, isPending: isLoadingLoginAccount } =
+  const { mutate: mutateLoginAccount, isLoading: isLoadingLoginAccount } =
     useMutation({
       mutationFn: AuthenticationAPI.LoginAccount,
       onSuccess: (response: any) => {
@@ -47,10 +56,7 @@ const Login: React.FC = () => {
     return <Skeleton />;
   }
 
-  if (userProfileResponse && isSuccess) {
-    dispatch(updateUserProfile(userProfileResponse as any));
-    history.replace(END_POINTS.CUSTOMER_ROLE.HOME);
-  }
+  const newUser: UserProfileTypes = userProfileResponse as any;
 
   return (
     <IonPage className="layout-auth">
@@ -89,15 +95,7 @@ const Login: React.FC = () => {
             <Form.Item
               label="Password"
               name="password"
-              rules={[
-                { required: true, message: "Password is required" },
-                {
-                  pattern:
-                    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-                  message:
-                    "Password must at least 8 characters, one letter and one number",
-                },
-              ]}
+              rules={[{ required: true, message: "Password is required" }]}
             >
               <Input.Password autoComplete="password" placeholder="123456aA!" />
             </Form.Item>

@@ -37,6 +37,11 @@ import { END_POINTS } from "./utils/constant";
 import CustomerContract from "./pages/Contract";
 import Surveys from "./pages/surveys";
 import UserProfile from "./pages/profile";
+import SurveyReports from "./pages/Report";
+import StaffContract from "./pages/StaffContract";
+import StaffSurvey from "./pages/StaffSurvey";
+import CustomerChat from "./pages/Chat";
+import ChatDetail from "./pages/Chat/ChatDetail";
 
 setupIonicReact();
 
@@ -51,6 +56,18 @@ const App: React.FC = () => (
 
         <Route exact path={END_POINTS.CUSTOMER_ROLE.HOME}>
           <Home />
+        </Route>
+
+        <Route exact path={END_POINTS.STAFF_ROLE.SURVEY_REPORT}>
+          <SurveyReports />
+        </Route>
+
+        <Route exact path={END_POINTS.STAFF_ROLE.CONTRACT}>
+          <StaffContract />
+        </Route>
+
+        <Route exact path={END_POINTS.STAFF_ROLE.SURVEY_REQUEST}>
+          <StaffSurvey />
         </Route>
 
         <Route exact path={END_POINTS.USER_PROFILE}>
@@ -70,8 +87,15 @@ const App: React.FC = () => (
         <Route exact path={END_POINTS.AUTHENTICATION.SIGN_UP}>
           <Register />
         </Route>
-        <Route exact path="/">
+        {/* <Route exact path="/">
           <Redirect to={END_POINTS.AUTHENTICATION.LOGIN} />
+        </Route> */}
+
+        <Route exact path={END_POINTS.CUSTOMER_ROLE.CHAT}>
+          <CustomerChat />
+        </Route>
+        <Route exact path={END_POINTS.CUSTOMER_ROLE.CHAT_DETAiL}>
+          <ChatDetail />
         </Route>
       </IonContent>
       <Footer />

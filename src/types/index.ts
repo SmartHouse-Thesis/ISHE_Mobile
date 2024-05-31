@@ -84,3 +84,8 @@ export type UserProfileTypes = {
   status: string;
   createAt: string;
 };
+
+export type SelectTypes = {
+  label: string;
+  value: string;
+};

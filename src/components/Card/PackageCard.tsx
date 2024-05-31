@@ -45,7 +45,12 @@ const ComboCard: React.FC<Props> = ({
           key={item.id}
           onClick={() => goToDetailPackage(item)}
         >
-          <Image src={item.images[0].url} alt="device-package-alt" />
+          <img
+            src={item.images[0].url}
+            alt="device-package-alt"
+            height={80}
+            style={{ objectFit: "cover", width: "100%" }}
+          />
           <IonCardHeader>
             <IonCardTitle>{convert.toMoney(item.price) || 0}</IonCardTitle>
             <p className="package-card__desc">

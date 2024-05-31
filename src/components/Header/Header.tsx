@@ -66,9 +66,6 @@ const Header: React.FC = () => {
 
             <IonButtons slot="end">
               <IonButton>
-                <ShoppingCartOutlined className="icon-custome" />
-              </IonButton>
-              <IonButton>
                 <BellOutlined className="icon-custome" />
               </IonButton>
             </IonButtons>

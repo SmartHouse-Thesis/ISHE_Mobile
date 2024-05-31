@@ -1,13 +1,34 @@
-import { Avatar, Button, Divider, Flex, Typography } from "antd";
-import { useSelector } from "react-redux";
+import { Avatar, Button, Flex } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { USER_PROFILE_LIST } from "./constant";
+import { updateUserProfile } from "../../redux/userProfileSlice";
+import { useHistory } from "react-router";
+import { END_POINTS } from "../../utils/constant";
 
 const UserProfile = () => {
   const userProfileState = useSelector(
     (selector: RootState) => selector.userProfile.profile
   );
+  const dispatch = useDispatch();
+  const history = useHistory();
 
+  const onHandleLogout = () => {
+    localStorage.clear();
+    dispatch(
+      updateUserProfile({
+        id: "",
+        phoneNumber: "",
+        fullName: "",
+        email: "",
+        avatar: null,
+        roleName: "",
+        status: "",
+        createAt: "",
+      })
+    );
+
+    history.push(END_POINTS.AUTHENTICATION.LOGIN);
+  };
   return (
     <Flex vertical gap="middle">
       <Flex gap="middle">
@@ -23,41 +44,13 @@ const UserProfile = () => {
         <Flex vertical gap={10}>
           <div style={{ fontWeight: "500" }}>{userProfileState.fullName}</div>
           <div style={{ fontSize: "14px" }}>{userProfileState.phoneNumber}</div>
-          <Button type="primary">Edit Profile</Button>
+          <Button type="primary">Chỉnh sửa thông tin</Button>
         </Flex>
       </Flex>
 
-      <Flex vertical gap={10}>
-        {USER_PROFILE_LIST.priority.map((item) => {
-          return (
-            <Flex gap={10} style={{ cursor: "pointer" }}>
-              {item.icon}
-              <Typography>{item.text}</Typography>
-            </Flex>
-          );
-        })}
-        <Divider style={{ margin: 0 }} />
-
-        {USER_PROFILE_LIST.external.map((item) => {
-          return (
-            <Flex gap={10} style={{ cursor: "pointer" }}>
-              {item.icon}
-              <Typography>{item.text}</Typography>
-            </Flex>
-          );
-        })}
-
-        <Divider style={{ margin: 0 }} />
-
-        {USER_PROFILE_LIST.personal.map((item) => {
-          return (
-            <Flex gap={10} style={{ cursor: "pointer" }}>
-              {item.icon}
-              <Typography>{item.text}</Typography>
-            </Flex>
-          );
-        })}
-      </Flex>
+      <Button block type="primary" onClick={onHandleLogout}>
+        Đăng xuất
+      </Button>
     </Flex>
   );
 };

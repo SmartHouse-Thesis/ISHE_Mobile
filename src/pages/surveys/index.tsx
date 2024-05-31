@@ -1,7 +1,18 @@
 import { useMutation } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import SurveyRequestAPI from "../../api/Survey";
-import { Card, Descriptions, Flex, Input, Skeleton } from "antd";
+import {
+  Avatar,
+  Button,
+  Card,
+  Descriptions,
+  Empty,
+  Flex,
+  Input,
+  List,
+  Skeleton,
+  Typography,
+} from "antd";
 import {
   onHandleErrorAPIResponse,
   onLoadSurveyStatus,
@@ -11,14 +22,19 @@ import dayjs from "dayjs";
 import { DateTimeFormat } from "../../enums";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { EyeOutlined, FileTextOutlined } from "@ant-design/icons";
+import SurveyDetail from "./SurveyDetail";
 
 const Surveys = () => {
   const userProfileState = useSelector(
     (selector: RootState) => selector.userProfile.profile
   );
+  const surveyDetailRef = useRef<any>();
+
+  const [surveySelected, setSurveySelected] = useState<SurveyItemTypes>();
 
   const {
-    isPending: isPendingSurveyList,
+    isLoading: isLoadingSurveyList,
     mutate: getSurveyList,
     data: surveyList,
   } = useMutation({
@@ -37,42 +53,51 @@ const Surveys = () => {
     });
   }, []);
 
-  if (isPendingSurveyList) {
+  if (isLoadingSurveyList) {
     return <Skeleton />;
   }
 
+  if (!surveyList?.data.length) {
+    return <Empty />;
+  }
+
+  const onOpenSurveyDetail = (value: SurveyItemTypes) => {
+    surveyDetailRef.current.openModal();
+    setSurveySelected(value);
+  };
+
   return (
-    <Flex vertical gap="middle">
-      {surveyList?.data.map((survey: SurveyItemTypes) => {
-        return (
-          <Card size="small" key={survey.id}>
-            <Descriptions
-              items={[
-                {
-                  key: "1",
-                  label: "Ngày tạo",
-                  children: dayjs(survey.createAt).format(
-                    DateTimeFormat.FULL_DATE_TIME_FORMAT
-                  ),
-                },
-                {
-                  key: "desc",
-                  label: "Mô tả",
-                  children: (
-                    <Input.TextArea rows={3} value={survey.description} />
-                  ),
-                },
-                {
-                  key: "status",
-                  label: "Trạng thái",
-                  children: onLoadSurveyStatus(survey.status),
-                },
-              ]}
+    <>
+      <SurveyDetail
+        ref={surveyDetailRef}
+        surveyItem={surveySelected as SurveyItemTypes}
+      />
+
+      <List
+        pagination={{ position: "bottom", align: "end", pageSize: 10 }}
+        dataSource={surveyList.data}
+        renderItem={(item: SurveyItemTypes, index) => (
+          <List.Item
+            key={index}
+            actions={[
+              <Button
+                icon={<EyeOutlined />}
+                size="small"
+                onClick={() => onOpenSurveyDetail(item)}
+              />,
+            ]}
+          >
+            <List.Item.Meta
+              avatar={<Avatar shape="square" icon={<FileTextOutlined />} />}
+              title={<a href="#"> Khảo sát {index + 1} </a>}
+              description={
+                <Typography.Text> {item.description}</Typography.Text>
+              }
             />
-          </Card>
-        );
-      })}
-    </Flex>
+          </List.Item>
+        )}
+      />
+    </>
   );
 };
 

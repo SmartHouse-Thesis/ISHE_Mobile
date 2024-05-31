@@ -1,0 +1,12 @@
+.survey-title {
+  font-size: 0.75rem;
+  font-weight: 500;
+  /* overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; */
+}
+
+.customer-name {
+  font-size: 0.75rem;
+  color: gray;
+}
