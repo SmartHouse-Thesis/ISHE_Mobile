@@ -6,9 +6,7 @@ import { useHistory } from "react-router";
 import { END_POINTS } from "../../utils/constant";
 
 const UserProfile = () => {
-  const userProfileState = useSelector(
-    (selector: RootState) => selector.userProfile.profile
-  );
+  const userProfileState = useSelector((selector: RootState) => selector.userProfile.profile);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -26,8 +24,7 @@ const UserProfile = () => {
         createAt: "",
       })
     );
-
-    history.push(END_POINTS.AUTHENTICATION.LOGIN);
+    history.replace(END_POINTS.AUTHENTICATION.LOGIN);
   };
   return (
     <Flex vertical gap="middle">

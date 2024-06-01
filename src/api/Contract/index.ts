@@ -1,6 +1,6 @@
 import { END_POINTS_API } from "../../utils/constant";
 import axiosClient from "../axiosClient";
-import { ContractListByCustomerId, UpdateContractTypes } from "./type";
+import { ContractListByCustomerId, CreateContractModifyRequest, UpdateContractTypes } from "./type";
 
 const ContractAPI = {
   getAllContracts: (params?: ContractListByCustomerId) =>
@@ -13,28 +13,22 @@ const ContractAPI = {
   },
 
   uploadContractImage: (params: { id: string; formData: FormData }) => {
-    return axiosClient.put(
-      `${END_POINTS_API.CONTRACT_IMAGE}/${params.id}`,
-      params.formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    return axiosClient.put(`${END_POINTS_API.CONTRACT_IMAGE}/${params.id}`, params.formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
 
   uploadContractAcceptance: (params: { id: string; formData: FormData }) => {
-    return axiosClient.put(
-      `${END_POINTS_API.CONTRACT_ACCEPTANCE}/${params.id}`,
-      params.formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    return axiosClient.put(`${END_POINTS_API.CONTRACT_ACCEPTANCE}/${params.id}`, params.formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
+
+  createContractModify: (params: CreateContractModifyRequest) => axiosClient.post(END_POINTS_API.CONTRACT_REQUEST, params),
 };
 
 export default ContractAPI;

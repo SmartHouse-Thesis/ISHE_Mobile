@@ -39,3 +39,9 @@ export type UpdateContractTypes = {
     quantity: number;
   }[];
 };
+
+export type CreateContractModifyRequest = {
+  contractId: string;
+  type: "Modify" | "Cancel";
+  description: string;
+};

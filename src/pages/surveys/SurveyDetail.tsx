@@ -1,17 +1,7 @@
-import {
-  Avatar,
-  Badge,
-  Descriptions,
-  Empty,
-  Flex,
-  Modal,
-  Tabs,
-  Typography,
-} from "antd";
+import { Avatar, Badge, Descriptions, Empty, Flex, Modal, Tabs, Typography } from "antd";
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { SurveyItemTypes } from "../../types/Survey";
 import dayjs from "dayjs";
-import CreateSurveyReport from "../Report/CreateSurveyReport";
 
 type SurveyDetailProps = {
   surveyItem: SurveyItemTypes;
@@ -32,18 +22,7 @@ const SurveyDetail = ({ surveyItem }: SurveyDetailProps, ref: any) => {
   };
 
   return (
-    <Modal
-      open={isOpenModal}
-      title="Chi tiết khảo sát"
-      onCancel={onCloseModal}
-      closeIcon
-      footer={null}
-    >
-      <CreateSurveyReport
-        ref={createSurveyReportRef}
-        AfterCloseModal={() => {}}
-        SurveyReportUpdate={undefined}
-      />
+    <Modal open={isOpenModal} title="Chi tiết khảo sát" onCancel={onCloseModal} closeIcon footer={null}>
       <Tabs
         items={[
           {

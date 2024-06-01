@@ -87,9 +87,9 @@ const App: React.FC = () => (
         <Route exact path={END_POINTS.AUTHENTICATION.SIGN_UP}>
           <Register />
         </Route>
-        {/* <Route exact path="/">
+        <Route exact path="/">
           <Redirect to={END_POINTS.AUTHENTICATION.LOGIN} />
-        </Route> */}
+        </Route>
 
         <Route exact path={END_POINTS.CUSTOMER_ROLE.CHAT}>
           <CustomerChat />

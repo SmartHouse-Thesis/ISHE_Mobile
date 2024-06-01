@@ -126,18 +126,19 @@ const CreateSurveyReportModal = (
     mutateAllDevicePackages();
     getSurveyList({
       customerId: "",
+      pageSize: 999,
     });
   }, []);
 
   useEffect(() => {
     if (SurveyReportUpdate) {
-      form.setFieldsValue({
-        appointmentDate: dayjs(SurveyReportUpdate.appointmentDate),
-        roomArea: SurveyReportUpdate.roomArea,
-        surveyRequestId: SurveyReportUpdate.surveyRequest.id,
-        recommendDevicePackageId: SurveyReportUpdate.recommendDevicePackage.id,
-        description: SurveyReportUpdate.description,
-      });
+      // form.setFieldsValue({
+      //   appointmentDate: dayjs(SurveyReportUpdate.appointmentDate),
+      //   roomArea: SurveyReportUpdate.roomArea,
+      //   surveyRequestId: SurveyReportUpdate.id,
+      //   recommendDevicePackageId: SurveyReportUpdate.recommendDevicePackage.id,
+      //   description: SurveyReportUpdate.description,
+      // });
     }
   }, [SurveyReportUpdate]);
 
@@ -147,14 +148,24 @@ const CreateSurveyReportModal = (
   };
 
   const onSubmitSurveyReportForm = (values: CreateNewSurveyReport) => {
-    if (SurveyReportUpdate) {
-      updateSurveyReport({
-        ...values,
-        id: SurveyReportUpdate.id,
-      });
-    } else {
-      createSurveyReport(values);
-    }
+    // if (SurveyReportUpdate) {
+    //   updateSurveyReport({
+    //     ...values,
+    //     id: SurveyReportUpdate.id,
+    //   });
+    // } else {
+    //   createSurveyReport({
+    //     ...values,
+    //     surveyRequestId: values.surveyRequestId || SurveyReportUpdate.id,
+    //   });
+    // }
+
+    console.log(values);
+
+    createSurveyReport({
+      ...values,
+      surveyRequestId: values.surveyRequestId || SurveyReportUpdate.id,
+    });
   };
 
   if (isDevicePackagesLoading || isLoadingSurveyList) {
@@ -163,7 +174,7 @@ const CreateSurveyReportModal = (
 
   return (
     <Modal
-      title={SurveyReportUpdate ? "Cập nhật báo cáo" : "Tạo bảng báo cáo"}
+      title={"Gửi báo cáo"}
       open={isOpenModal}
       onCancel={onCloseModal}
       footer
@@ -172,12 +183,13 @@ const CreateSurveyReportModal = (
       <Form layout="vertical" form={form} onFinish={onSubmitSurveyReportForm}>
         <Row gutter={[14, 14]}>
           <Col span={24}>
-            <Form.Item
-              label="Yêu cẩu khảo sát"
-              name="surveyRequestId"
-              rules={[{ required: true, message: "Yêu cầu nhập thông tin" }]}
-            >
-              <Select options={surveyRequestSelect} />
+            <Form.Item label="Yêu cẩu khảo sát" name="surveyRequestId">
+              {surveyRequestSelect.length > 0 && (
+                <Select
+                  options={surveyRequestSelect}
+                  defaultValue={SurveyReportUpdate?.id}
+                />
+              )}
             </Form.Item>
           </Col>
 

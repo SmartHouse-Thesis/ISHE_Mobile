@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { onHandleErrorAPIResponse } from "../../utils/helper";
 import ContractAPI from "../../api/Contract";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { ContractItemTypes } from "../../api/Contract/type";
 import {
   Avatar,
@@ -24,12 +24,14 @@ import { ContractStatusEnum } from "../../enums";
 import "./style.css";
 import dayjs from "dayjs";
 import { UploadOutlined } from "@ant-design/icons";
+import ContractRequirementDialog from "./ContractRequirementDialog";
 
 const StaffContract = () => {
   const [contracts, setContracts] = useState<ContractItemTypes[]>([]);
   const userProfileState = useSelector(
     (selector: RootState) => selector.userProfile.profile
   );
+  const contractRequirementRef = useRef<any>();
 
   const { isLoading: isLoadingUploadImage, mutate: mutateUploadContractImage } =
     useMutation({
@@ -177,8 +179,13 @@ const StaffContract = () => {
     }
   };
 
+  const onOpenContractRequest = (contractId: string) =>
+    contractRequirementRef.current.openModal(contractId);
+
   return (
     <Flex vertical gap="middle">
+      <ContractRequirementDialog ref={contractRequirementRef} />
+
       <Spin
         spinning={
           isLoadingUploadImage ||
@@ -231,7 +238,14 @@ const StaffContract = () => {
         <Flex vertical gap="middle" style={{ marginTop: "1rem" }}>
           {contracts.map((contractItem) => {
             return (
-              <Card key={contractItem.id} size="small">
+              <Card
+                key={contractItem.id}
+                size="small"
+                style={{
+                  border: "1px solid #000",
+                  borderRadius: "1rem",
+                }}
+              >
                 <Flex vertical gap={"middle"}>
                   <Flex justify="space-between" align="center">
                     <div className="contract-tag">CONTRACT</div>
@@ -288,50 +302,6 @@ const StaffContract = () => {
                   </Flex>
 
                   <Row gutter={[14, 14]}>
-                    <Col span={24}>
-                      <Select
-                        defaultValue={contractItem.status}
-                        style={{ width: "100%" }}
-                        onChange={(event) =>
-                          onUpdateContractStatus(
-                            contractItem,
-                            event as ContractStatusEnum
-                          )
-                        }
-                        placeholder="Trạng thái"
-                        options={[
-                          {
-                            label: "All",
-                            value: "",
-                          },
-                          {
-                            label: "Pending Deposit",
-                            value: ContractStatusEnum.PENDiNG_DEPOSIT,
-                          },
-                          {
-                            label: "Deposit Paid",
-                            value: ContractStatusEnum.DEPOSIT_PAID,
-                          },
-                          {
-                            label: "Inprogress",
-                            value: ContractStatusEnum.IN_PROGRESS,
-                          },
-                          {
-                            label: "Wait For Paid",
-                            value: ContractStatusEnum.WAIT_FOR_PAID,
-                          },
-                          {
-                            label: "Completed",
-                            value: ContractStatusEnum.COMPLETED,
-                          },
-                          {
-                            label: "Cancelled",
-                            value: ContractStatusEnum.CANCELLED,
-                          },
-                        ]}
-                      />
-                    </Col>
-
                     <Col span={12}>
                       <label htmlFor="file-upload" className="upload-btn">
                         <UploadOutlined />

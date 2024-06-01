@@ -1,11 +1,4 @@
-import {
-  FileTextOutlined,
-  HomeOutlined,
-  PhoneOutlined,
-  UserOutlined,
-  AuditOutlined,
-  MessageOutlined,
-} from "@ant-design/icons";
+import { FileTextOutlined, HomeOutlined, PhoneOutlined, UserOutlined, AuditOutlined, MessageOutlined } from "@ant-design/icons";
 
 export const END_POINTS = {
   AUTHENTICATION: {
@@ -41,12 +34,16 @@ export const END_POINTS_API = {
     SIGN_UP: "/api/customers",
   },
 
+  CONTRACT_REQUEST: "/api/contract-requests",
   CONTRACTS: "/api/contracts",
   SURVEY: "/api/survey-requests",
   FEEDBACK: "/api/feedbacks",
   SURVEY_REPORT: "/api/survey-reports",
   CONTRACT_IMAGE: "/api/contracts/upload-image",
   CONTRACT_ACCEPTANCE: "/api/contracts/upload-acceptance",
+  DEVICE_TOKENS: "/api/device-tokens",
+  NOTIFICATIONS: "/api/notifications",
+  ZALO_PAY: "/api/payments/zalo-pay",
 };
 
 export const ROUTES_NON_FOOTER_HEADER = [
@@ -114,5 +111,4 @@ export const CUSTOMER_FOOTER = [
   },
 ];
 
-export const DEFAULT_AVATAR =
-  "https://img.freepik.com/premium-vector/bald-empty-face-icon-avatar-vector-illustration_601298-13391.jpg";
+export const DEFAULT_AVATAR = "https://img.freepik.com/premium-vector/bald-empty-face-icon-avatar-vector-illustration_601298-13391.jpg";

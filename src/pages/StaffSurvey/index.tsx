@@ -1,20 +1,30 @@
 import { useMutation } from "@tanstack/react-query";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import SurveyRequestAPI from "../../api/Survey";
 import { onHandleErrorAPIResponse } from "../../utils/helper";
-import { Card, Flex, Input, Select, Skeleton, Tag } from "antd";
+import { Button, Card, Flex, Input, Select, Skeleton, Spin, Tag } from "antd";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { debounce } from "lodash";
-import { SurveyStatusEnum } from "../../enums";
+import { ContractStatusEnum, SurveyStatusEnum } from "../../enums";
 import { SurveyItemTypes } from "../../types/Survey";
 import dayjs from "dayjs";
+import CreateSurveyReport from "../Report/CreateSurveyReport";
 
 const StaffSurvey = () => {
   const userProfileState = useSelector(
     (selector: RootState) => selector.userProfile.profile
   );
   const [surveyRequest, setSurveyRequest] = useState<SurveyItemTypes[]>([]);
+  const [surveyReportUpdate, setSurveyReportUpdate] = useState<any>();
+
+  const createSurveyReportRef = useRef<any>();
+
+  const onOpenSurveyReport = (values: any) => {
+    console.log(values);
+    setSurveyReportUpdate(values);
+    createSurveyReportRef.current.openModal();
+  };
 
   const {
     isLoading: isLoadingSurveyList,
@@ -75,11 +85,24 @@ const StaffSurvey = () => {
   };
 
   if (isLoadingSurveyList) {
-    return <Skeleton paragraph />;
+    return (
+      <Flex align="center" justify="center" style={{ minHeight: "50vh" }}>
+        <Spin />
+      </Flex>
+    );
   }
 
   return (
     <Flex vertical gap="middle">
+      <CreateSurveyReport
+        ref={createSurveyReportRef}
+        SurveyReportUpdate={surveyReportUpdate}
+        AfterCloseModal={() => {
+          getSurveyList({
+            staffId: userProfileState.id,
+          });
+        }}
+      />
       <Flex align="center" gap="middle">
         <Input.Search
           placeholder="Tìm mô tả khảo sất"
@@ -117,8 +140,15 @@ const StaffSurvey = () => {
         <Flex vertical gap="middle">
           {surveyRequest.map((item) => {
             return (
-              <Card size="small" key={item.id}>
-                <Flex vertical gap={4} flex={1}>
+              <Card
+                size="small"
+                key={item.id}
+                style={{
+                  border: "1px solid #000",
+                  borderRadius: "1rem",
+                }}
+              >
+                <Flex vertical gap={8} flex={1}>
                   <Flex justify="space-between" gap="middle" align="flex-start">
                     <div className="survey-title">{item.description}</div>
                     <Tag color={onGetStatusColor(item.status)}>
@@ -134,6 +164,17 @@ const StaffSurvey = () => {
                       {dayjs(item.surveyDate).format("MM/DD/YYYY HH:mm")}
                     </div>
                   </Flex>
+
+                  {item.status === String(ContractStatusEnum.IN_PROGRESS) && (
+                    <Button
+                      type="primary"
+                      onClick={() => onOpenSurveyReport(item)}
+                      block
+                      size="small"
+                    >
+                      Gửi báo cáo
+                    </Button>
+                  )}
                 </Flex>
               </Card>
             );

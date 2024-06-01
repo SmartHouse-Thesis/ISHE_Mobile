@@ -7,6 +7,7 @@ import {
   Input,
   Select,
   Skeleton,
+  Spin,
   Tag,
   Typography,
   message,
@@ -22,7 +23,6 @@ import { QuerySurveyReportParams } from "../../types/SurveyReport";
 import { debounce } from "lodash";
 
 const SurveyReports = () => {
-  const createSurveyReportRef = useRef<any>();
   const [surveyReportUpdate, setSurveyReportUpdate] = useState<any>();
   const [surveyReports, setSurveyReports] = useState<any[]>([]);
   const [surveyFilter, setSurveyFilter] = useState<QuerySurveyReportParams>({
@@ -51,7 +51,11 @@ const SurveyReports = () => {
   }, [surveyFilter]);
 
   if (isLoadingSurveyList) {
-    return <Skeleton />;
+    return (
+      <Flex align="center" justify="center" style={{ minHeight: "50vh" }}>
+        <Spin />
+      </Flex>
+    );
   }
 
   const onGetStatusColor = (status: string) => {
@@ -72,10 +76,6 @@ const SurveyReports = () => {
         return "red";
       }
     }
-  };
-
-  const onOpenSurveyReport = () => {
-    createSurveyReportRef.current.openModal();
   };
 
   const onFilterSurveyStatus = (status: SurveyStatusEnum) => {
@@ -99,19 +99,10 @@ const SurveyReports = () => {
 
   const onUpdateSurveyReport = (data: any) => {
     setSurveyReportUpdate(data);
-    createSurveyReportRef.current.openModal();
   };
 
   return (
     <Flex vertical gap="middle">
-      <CreateSurveyReport
-        ref={createSurveyReportRef}
-        SurveyReportUpdate={surveyReportUpdate}
-        AfterCloseModal={() => {
-          getSurveyReports(surveyFilter as QuerySurveyReportParams);
-        }}
-      />
-
       <Flex align="center" gap="middle">
         <Input.Search
           placeholder="Tìm tên báo cáo"
@@ -145,10 +136,6 @@ const SurveyReports = () => {
         />
       </Flex>
 
-      <Button type="primary" onClick={onOpenSurveyReport} block>
-        Gửi báo cáo
-      </Button>
-
       {surveyReports && (
         <Flex vertical gap="middle">
           {surveyReports.map((item: any) => {
@@ -157,7 +144,7 @@ const SurveyReports = () => {
                 <Flex vertical gap={4} flex={1}>
                   <Flex justify="space-between" gap="middle">
                     <div className="survey-title">
-                      {item.recommendDevicePackage.name}
+                      {item.recommendDevicePackage?.name}
                     </div>
 
                     {item.status === SurveyStatusEnum.INPROGESS && (
